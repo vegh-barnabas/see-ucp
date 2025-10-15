@@ -12,9 +12,17 @@
       <input matInput type="password" />
     </mat-form-field>
 
-    <div class="button-container">
-      <button mat-raised-button color="accent">Register</button>
-      <button mat-raised-button color="primary">Log In</button>
-    </div>
+    <button mat-raised-button class="login-button" color="primary">
+      Log In
+    </button>
   </mat-card-content>
+
+  <mat-card-footer class="login-footer">
+    <p class="footer-link">
+      Don't have an account?
+      <a href="/register">Register</a>
+    </p>
+
+    <a href="/forgot-password" class="footer-link">Forgot password</a>
+  </mat-card-footer>
 </mat-card>

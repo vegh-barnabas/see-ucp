@@ -9,23 +9,34 @@
 mat-card {
   width: 400px;
   padding: 1rem;
+  display: flex;
+  gap: 12px;
 }
 
 mat-card-title {
   display: flex;
   justify-content: center;
-  align-content: center;
 }
 
 mat-card-content {
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
   flex-direction: column;
 
-  .button-container {
-    display: flex;
-    justify-content: end;
-    gap: 1rem;
+  mat-form-field {
+    width: 100%;
+    max-width: 400px;
   }
+
+  .login-button {
+    width: 170px;
+    max-width: 80%;
+  }
+}
+
+.login-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
