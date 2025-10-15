@@ -10,3 +10,22 @@ mat-card {
   width: 400px;
   padding: 1rem;
 }
+
+mat-card-title {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+mat-card-content {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+
+  .button-container {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+  }
+}
