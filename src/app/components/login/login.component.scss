@@ -39,4 +39,17 @@ mat-card-content {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+
+  .footer-link {
+    font-size: 0.85rem;
+    color: #757575; /* grey 600 */
+  }
+
+  .footer-link a {
+    color: #757575; /* grey 600 */
+  }
+
+  .footer-link a:hover {
+    color: #424242; /* grey 800 */
+  }
 }
