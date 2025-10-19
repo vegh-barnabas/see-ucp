@@ -1,3 +1,5 @@
+@use "theme" as theme;
+
 :host {
   display: flex;
   justify-content: center;
@@ -42,14 +44,14 @@ mat-card-content {
 
   .footer-link {
     font-size: 0.85rem;
-    color: #757575; /* grey 600 */
+    color: theme.$link;
   }
 
-  .footer-link a {
-    color: #757575; /* grey 600 */
+  a {
+    color: theme.$link;
   }
 
-  .footer-link a:hover {
-    color: #424242; /* grey 800 */
+  a:hover {
+    color: theme.$link-hover;
   }
 }
