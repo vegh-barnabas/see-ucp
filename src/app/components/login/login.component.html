@@ -20,9 +20,11 @@
   <mat-card-footer class="login-footer">
     <p class="footer-link">
       Don't have an account?
-      <a href="/register">Register</a>
+      <a [routerLink]="['/register']">Register</a>
     </p>
 
-    <a href="/forgot-password" class="footer-link">Forgot password</a>
+    <a class="footer-link" [routerLink]="['/forgot-password']">
+      Forgot password
+    </a>
   </mat-card-footer>
 </mat-card>
