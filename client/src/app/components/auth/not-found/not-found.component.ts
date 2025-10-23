@@ -10,11 +10,11 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
   styleUrls: ['./not-found.component.scss'],
 })
 export class NotFoundComponent implements OnInit {
-  errorCode!: string;
+  public errorCode!: string;
 
   constructor(private route: ActivatedRoute) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.errorCode = this.route.snapshot.data['errorCode'];
   }
 }

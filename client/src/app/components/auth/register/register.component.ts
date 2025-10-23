@@ -33,11 +33,11 @@ import * as Auth from '@global/auth';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-  hidePassword = true;
+  public hidePassword = true;
 
   readonly Auth = Auth;
 
-  registerForm = new FormGroup(
+  public registerForm = new FormGroup(
     {
       username: new FormControl('', [
         Validators.required,
@@ -81,19 +81,19 @@ export class RegisterComponent {
   }
 
   // Form field getters
-  get username() {
+  public get username() {
     return this.registerForm.get('username');
   }
 
-  get email() {
+  public get email() {
     return this.registerForm.get('email');
   }
 
-  get password() {
+  public get password() {
     return this.registerForm.get('password');
   }
 
-  get passwordConfirm() {
+  public get passwordConfirm() {
     return this.registerForm.get('passwordConfirm');
   }
 }
