@@ -6,6 +6,6 @@ export class AuthService {
   private http = inject(HttpClient);
 
   public getMockResponse() {
-    return this.http.get('http://google.com');
+    return this.http.get('/api/');
   }
 }
