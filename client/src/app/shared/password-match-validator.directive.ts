@@ -3,6 +3,7 @@ import { AbstractControl, ValidationErrors, ValidatorFn, FormGroup } from '@angu
 export function passwordMatchValidator(passwordControlName: string): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     if (!(control.parent instanceof FormGroup)) return null;
+
     const passwordControl = control.parent.get(passwordControlName);
     if (!passwordControl) return { mismatch: true };
 

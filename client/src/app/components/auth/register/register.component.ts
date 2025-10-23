@@ -10,7 +10,9 @@ import { RouterModule } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { AuthService } from '../auth.service';
+
 import { passwordMatchValidator } from '@shared/password-match-validator.directive';
+import { emailValidator } from '@shared/email-validator.directive';
 
 import * as Auth from '@global/auth';
 
@@ -42,10 +44,7 @@ export class RegisterComponent {
         Validators.minLength(Auth.USERNAME_MIN_LENGTH),
         Validators.maxLength(Auth.USERNAME_MAX_LENGTH),
       ]),
-      email: new FormControl('', [
-        Validators.required,
-        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-      ]),
+      email: new FormControl('', [Validators.required, emailValidator()]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(Auth.PASSWORD_MIN_LENGTH),

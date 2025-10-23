@@ -26,7 +26,7 @@
         <input matInput formControlName="email" />
         @if (email?.hasError('required')) {
           <mat-error>Email is required</mat-error>
-        } @else if (email?.hasError('pattern')) {
+        } @else if (email?.hasError('invalid')) {
           <mat-error>Please enter a valid email</mat-error>
         }
       </mat-form-field>
