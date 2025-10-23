@@ -42,15 +42,15 @@ export class RegisterComponent {
         Validators.minLength(Auth.USERNAME_MIN_LENGTH),
         Validators.maxLength(Auth.USERNAME_MAX_LENGTH),
       ]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+      ]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(Auth.PASSWORD_MIN_LENGTH),
       ]),
-      passwordConfirm: new FormControl('', [
-        Validators.required,
-        passwordMatchValidator('password'),
-      ]),
+      passwordConfirm: new FormControl('', [passwordMatchValidator('password')]),
     },
     { updateOn: 'submit' },
   );
@@ -81,7 +81,20 @@ export class RegisterComponent {
     return this.authService.register(user).subscribe(console.log);
   }
 
+  // Form field getters
   get username() {
     return this.registerForm.get('username');
+  }
+
+  get email() {
+    return this.registerForm.get('email');
+  }
+
+  get password() {
+    return this.registerForm.get('password');
+  }
+
+  get passwordConfirm() {
+    return this.registerForm.get('passwordConfirm');
   }
 }

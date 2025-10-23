@@ -24,16 +24,28 @@
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" />
+        @if (email?.hasError('required')) {
+          <mat-error>Email is required</mat-error>
+        } @else if (email?.hasError('pattern')) {
+          <mat-error>Please enter a valid email</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Enter your password</mat-label>
         <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" />
-        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+        <button type="button" matIconButton matSuffix (click)="hidePassword = !hidePassword">
           <mat-icon>
             {{ hidePassword ? 'visibility_off' : 'visibility' }}
           </mat-icon>
         </button>
+        @if (password?.hasError('required')) {
+          <mat-error>Password is required</mat-error>
+        } @else if (password?.hasError('minlength')) {
+          <mat-error>
+            Password must be at least {{ Auth.PASSWORD_MIN_LENGTH }} characters long
+          </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -43,6 +55,9 @@
           [type]="hidePassword ? 'password' : 'text'"
           formControlName="passwordConfirm"
         />
+        @if (passwordConfirm?.hasError('mismatch')) {
+          <mat-error>The two passwords are not the same</mat-error>
+        }
       </mat-form-field>
 
       <button type="submit" matButton="elevated" class="register-button">Register</button>

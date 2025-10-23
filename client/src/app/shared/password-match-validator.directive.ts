@@ -4,7 +4,8 @@ export function passwordMatchValidator(passwordControlName: string): ValidatorFn
   return (control: AbstractControl): ValidationErrors | null => {
     if (!(control.parent instanceof FormGroup)) return null;
     const passwordControl = control.parent.get(passwordControlName);
-    if (!passwordControl) return null;
-    return control.value === passwordControl.value ? null : { passwordsMismatch: true };
+    if (!passwordControl) return { mismatch: true };
+
+    return control.value === passwordControl.value ? null : { mismatch: true };
   };
 }
