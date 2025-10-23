@@ -12,3 +12,8 @@ export interface ForgotPasswordUser {
   username: string;
   email: string;
 }
+
+export interface LoginUser {
+  username: string;
+  password: string;
+}

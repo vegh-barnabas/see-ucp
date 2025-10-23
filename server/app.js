@@ -32,6 +32,11 @@ app.post("/forgot-password", (req, res) => {
   res.status(200).json({ message: "Forgot password sent successfully", user });
 });
 
+app.post("/login", (req, res) => {
+  const user = req.body;
+  res.status(200).json({ message: "Login sent successfully", user });
+});
+
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });

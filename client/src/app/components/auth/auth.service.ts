@@ -14,4 +14,8 @@ export class AuthService {
   public forgotPassword(user: Auth.ForgotPasswordUser) {
     return this.http.post('/api/forgot-password', user);
   }
+
+  public login(user: Auth.LoginUser) {
+    return this.http.post('/api/login', user);
+  }
 }
