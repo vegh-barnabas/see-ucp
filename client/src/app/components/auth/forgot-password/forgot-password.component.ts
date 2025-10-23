@@ -45,10 +45,9 @@ export class ForgotPasswordComponent {
 
     console.warn(this.forgotPasswordForm.value);
 
-    const registerUser: Auth.RegisterUser = {
+    const registerUser: Auth.ForgotPasswordUser = {
       username: this.forgotPasswordForm.value.username!,
-      email: this.forgotPasswordForm.value.username!,
-      password: this.forgotPasswordForm.value.username!,
+      email: this.forgotPasswordForm.value.email!,
     };
 
     this.forgotPassword(registerUser);
