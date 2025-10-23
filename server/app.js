@@ -1,10 +1,12 @@
-import { createServer } from "http";
+import express from "express";
 
-const hostname = "127.0.0.1";
+const app = express();
 const port = 3000;
 
-const server = createServer((req, res) => {});
+app.get("/", ({ res }) => {
+  res.send("Hello World!");
+});
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.listen(port, () => {
+  console.log(`App listening on port ${port}`);
 });
