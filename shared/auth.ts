@@ -7,3 +7,8 @@ export interface RegisterUser {
   password: string;
   email: string;
 }
+
+export interface ForgotPasswordUser {
+  username: string;
+  email: string;
+}

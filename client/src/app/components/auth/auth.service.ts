@@ -10,4 +10,8 @@ export class AuthService {
   public register(user: Auth.RegisterUser) {
     return this.http.post('/api/register', user);
   }
+
+  public forgotPassword(user: Auth.ForgotPasswordUser) {
+    return this.http.post('/api/forgot-password', user);
+  }
 }
