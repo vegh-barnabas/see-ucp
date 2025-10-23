@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'not-found',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.scss'],
 })

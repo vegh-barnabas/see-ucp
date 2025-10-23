@@ -22,7 +22,7 @@
       <input matInput [type]="hidePassword ? 'password' : 'text'" />
       <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
         <mat-icon>
-          {{ hidePassword ? "visibility_off" : "visibility" }}
+          {{ hidePassword ? 'visibility_off' : 'visibility' }}
         </mat-icon>
       </button>
     </mat-form-field>
@@ -32,8 +32,6 @@
       <input matInput [type]="hidePassword ? 'password' : 'text'" />
     </mat-form-field>
 
-    <button mat-raised-button class="register-button" color="accent">
-      Register
-    </button>
+    <button mat-raised-button class="register-button" color="accent">Register</button>
   </mat-card-content>
 </mat-card>
