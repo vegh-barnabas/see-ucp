@@ -7,32 +7,38 @@
   </mat-card-title>
 
   <mat-card-content>
-    <mat-form-field>
-      <mat-label>Username</mat-label>
-      <input matInput type="text" />
-    </mat-form-field>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput type="text" formControlName="username" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input matInput />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Enter your password</mat-label>
-      <input matInput [type]="hidePassword ? 'password' : 'text'" />
-      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
-        <mat-icon>
-          {{ hidePassword ? 'visibility_off' : 'visibility' }}
-        </mat-icon>
-      </button>
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" />
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+          <mat-icon>
+            {{ hidePassword ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+        </button>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input matInput [type]="hidePassword ? 'password' : 'text'" />
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="passwordConfirm"
+        />
+      </mat-form-field>
 
-    <button matButton="elevated" class="register-button" (click)="register()">Register</button>
-    <button (click)="getMockResponse()">Get mock data</button>
+      <button matButton="elevated" class="register-button" (click)="register()">Register</button>
+      <button (click)="getMockResponse()">Get mock data</button>
+    </form>
   </mat-card-content>
 </mat-card>

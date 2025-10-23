@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { AuthService, RegisterUser } from '../auth.service';
 
@@ -21,6 +22,7 @@ import { AuthService, RegisterUser } from '../auth.service';
     MatInputModule,
     MatIconModule,
     RouterModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
@@ -28,10 +30,21 @@ import { AuthService, RegisterUser } from '../auth.service';
 export class RegisterComponent {
   hidePassword = true;
 
+  registerForm = new FormGroup({
+    username: new FormControl(''),
+    email: new FormControl(''),
+    password: new FormControl(''),
+    passwordConfirm: new FormControl(''),
+  });
+
   constructor(private authService: AuthService) {}
 
   public getMockResponse() {
     this.authService.getMockResponse().subscribe(console.log);
+  }
+
+  public onSubmit() {
+    console.warn(this.registerForm.value);
   }
 
   public register(user?: RegisterUser) {
