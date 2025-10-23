@@ -32,7 +32,7 @@
       <input matInput [type]="hidePassword ? 'password' : 'text'" />
     </mat-form-field>
 
-    <button matButton="elevated" class="register-button">Register</button>
+    <button matButton="elevated" class="register-button" (click)="register()">Register</button>
     <button (click)="getMockResponse()">Get mock data</button>
   </mat-card-content>
 </mat-card>

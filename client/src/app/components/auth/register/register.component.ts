@@ -7,7 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '../auth.service';
+
+import { AuthService, RegisterUser } from '../auth.service';
 
 @Component({
   selector: 'register',
@@ -31,5 +32,11 @@ export class RegisterComponent {
 
   public getMockResponse() {
     this.authService.getMockResponse().subscribe(console.log);
+  }
+
+  public register(user?: RegisterUser) {
+    if (!user) user = { username: 'bolha', password: 'alma', email: 'bolha@example.com' };
+
+    return this.authService.register(user).subscribe(console.log);
   }
 }
