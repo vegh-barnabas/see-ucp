@@ -1,12 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
-// todo make this interface shared
-export interface RegisterUser {
-  username: string;
-  password: string;
-  email: string;
-}
+import * as Auth from '@global/auth';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -16,7 +11,7 @@ export class AuthService {
     return this.http.get('/api/');
   }
 
-  public register(user: RegisterUser) {
+  public register(user: Auth.RegisterUser) {
     return this.http.post('/api/register', user);
   }
 }

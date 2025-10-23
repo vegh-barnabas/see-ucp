@@ -9,15 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { AuthService, RegisterUser } from '../auth.service';
+import { AuthService } from '../auth.service';
 import { passwordMatchValidator } from '@shared/password-match-validator.directive';
 
-// todo make this shared between server and client
-export const USERNAME_MIN_LENGTH = 4;
-export const USERNAME_MAX_LENGTH = 32;
-export const PASSWORD_MIN_LENGTH = 8;
-
-import * as Limits from './register.component';
+import * as Auth from '@global/auth';
 
 @Component({
   selector: 'register',
@@ -38,19 +33,19 @@ import * as Limits from './register.component';
 export class RegisterComponent {
   hidePassword = true;
 
-  readonly Limits = Limits;
+  readonly Auth = Auth;
 
   registerForm = new FormGroup(
     {
       username: new FormControl('', [
         Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(32),
+        Validators.minLength(Auth.USERNAME_MIN_LENGTH),
+        Validators.maxLength(Auth.USERNAME_MAX_LENGTH),
       ]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(PASSWORD_MIN_LENGTH),
+        Validators.minLength(Auth.PASSWORD_MIN_LENGTH),
       ]),
       passwordConfirm: new FormControl('', [
         Validators.required,
@@ -71,7 +66,7 @@ export class RegisterComponent {
 
     console.warn(this.registerForm.value);
 
-    const registerUser: RegisterUser = {
+    const registerUser: Auth.RegisterUser = {
       username: this.registerForm.value.username!,
       email: this.registerForm.value.username!,
       password: this.registerForm.value.username!,
@@ -80,7 +75,7 @@ export class RegisterComponent {
     this.register(registerUser);
   }
 
-  public register(user?: RegisterUser) {
+  public register(user?: Auth.RegisterUser) {
     if (!user) user = { username: 'bolha', password: 'alma', email: 'bolha@example.com' };
 
     return this.authService.register(user).subscribe(console.log);

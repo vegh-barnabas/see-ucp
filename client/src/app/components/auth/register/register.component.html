@@ -15,8 +15,8 @@
           <mat-error>Username is required</mat-error>
         } @else if (username?.hasError('minlength') || username?.hasError('maxlength')) {
           <mat-error>
-            Username must be between {{ Limits.USERNAME_MIN_LENGTH }} and
-            {{ Limits.USERNAME_MAX_LENGTH }}
+            Username must be between {{ Auth.USERNAME_MIN_LENGTH }} and
+            {{ Auth.USERNAME_MAX_LENGTH }}
           </mat-error>
         }
       </mat-form-field>
