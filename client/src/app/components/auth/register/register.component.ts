@@ -7,9 +7,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { AuthService, RegisterUser } from '../auth.service';
+import { passwordMatchValidator } from '@shared/password-match-validator.directive';
+
+const USERNAME_MIN_LENGTH = 4;
+const USERNAME_MAX_LENGTH = 32;
+const PASSWORD_MIN_LENGTH = 8;
 
 @Component({
   selector: 'register',
@@ -31,10 +36,14 @@ export class RegisterComponent {
   hidePassword = true;
 
   registerForm = new FormGroup({
-    username: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl(''),
-    passwordConfirm: new FormControl(''),
+    username: new FormControl('', [
+      Validators.required,
+      Validators.minLength(USERNAME_MIN_LENGTH),
+      Validators.maxLength(USERNAME_MAX_LENGTH),
+    ]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(PASSWORD_MIN_LENGTH)]),
+    passwordConfirm: new FormControl('', [Validators.required, passwordMatchValidator('password')]),
   });
 
   constructor(private authService: AuthService) {}
