@@ -56,10 +56,6 @@ export class RegisterComponent {
 
   constructor(private authService: AuthService) {}
 
-  public getMockResponse() {
-    this.authService.getMockResponse().subscribe(console.log);
-  }
-
   public onSubmit() {
     if (this.registerForm.invalid) return;
 

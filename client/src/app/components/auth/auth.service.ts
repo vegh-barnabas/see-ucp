@@ -7,10 +7,6 @@ import * as Auth from '@global/auth';
 export class AuthService {
   private http = inject(HttpClient);
 
-  public getMockResponse() {
-    return this.http.get('/api/');
-  }
-
   public register(user: Auth.RegisterUser) {
     return this.http.post('/api/register', user);
   }
