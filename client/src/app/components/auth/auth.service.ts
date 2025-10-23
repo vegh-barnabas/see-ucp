@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
+// todo make this interface shared
 export interface RegisterUser {
   username: string;
   password: string;

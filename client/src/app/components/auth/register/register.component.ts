@@ -12,9 +12,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService, RegisterUser } from '../auth.service';
 import { passwordMatchValidator } from '@shared/password-match-validator.directive';
 
-const USERNAME_MIN_LENGTH = 4;
-const USERNAME_MAX_LENGTH = 32;
-const PASSWORD_MIN_LENGTH = 8;
+// todo make this shared between server and client
+export const USERNAME_MIN_LENGTH = 4;
+export const USERNAME_MAX_LENGTH = 32;
+export const PASSWORD_MIN_LENGTH = 8;
+
+import * as Limits from './register.component';
 
 @Component({
   selector: 'register',
@@ -35,16 +38,27 @@ const PASSWORD_MIN_LENGTH = 8;
 export class RegisterComponent {
   hidePassword = true;
 
-  registerForm = new FormGroup({
-    username: new FormControl('', [
-      Validators.required,
-      Validators.minLength(USERNAME_MIN_LENGTH),
-      Validators.maxLength(USERNAME_MAX_LENGTH),
-    ]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(PASSWORD_MIN_LENGTH)]),
-    passwordConfirm: new FormControl('', [Validators.required, passwordMatchValidator('password')]),
-  });
+  readonly Limits = Limits;
+
+  registerForm = new FormGroup(
+    {
+      username: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(32),
+      ]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(PASSWORD_MIN_LENGTH),
+      ]),
+      passwordConfirm: new FormControl('', [
+        Validators.required,
+        passwordMatchValidator('password'),
+      ]),
+    },
+    { updateOn: 'submit' },
+  );
 
   constructor(private authService: AuthService) {}
 
@@ -53,12 +67,26 @@ export class RegisterComponent {
   }
 
   public onSubmit() {
+    if (this.registerForm.invalid) return;
+
     console.warn(this.registerForm.value);
+
+    const registerUser: RegisterUser = {
+      username: this.registerForm.value.username!,
+      email: this.registerForm.value.username!,
+      password: this.registerForm.value.username!,
+    };
+
+    this.register(registerUser);
   }
 
   public register(user?: RegisterUser) {
     if (!user) user = { username: 'bolha', password: 'alma', email: 'bolha@example.com' };
 
     return this.authService.register(user).subscribe(console.log);
+  }
+
+  get username() {
+    return this.registerForm.get('username');
   }
 }
