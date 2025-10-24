@@ -63,8 +63,8 @@ export class RegisterComponent {
 
     const registerUser: Auth.RegisterUser = {
       username: this.registerForm.value.username!,
-      email: this.registerForm.value.username!,
-      password: this.registerForm.value.username!,
+      email: this.registerForm.value.email!,
+      password: this.registerForm.value.password!,
     };
 
     this.register(registerUser);
