@@ -1,0 +1,6 @@
+add ts to server
+make it a monorepo
+add this to the local gitignore thingy
+JWT, Bearer
+content projection register, loginra
+unit testing pl custom validatort
