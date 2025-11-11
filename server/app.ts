@@ -1,31 +1,14 @@
-import express from "express"; // todo add ts to server
+// todo add types
+
+import express from "express";
 import bcrypt from "bcrypt";
 import { Sequelize, DataTypes } from "sequelize";
 import { styleText } from 'node:util';
 import jwt from "jsonwebtoken";
 
 import dotenv from 'dotenv';
+import { authMiddleware } from "./authMiddleware.ts";
 dotenv.config();
-
-// todo fix this and add type in login
-// import { LoginUser } from "../shared/auth"
-
-// todo put into middleware
-export function authMiddleware(req: any, res: any, next: any) {
-  const authHeader = req.headers.authorization;
-  if (!authHeader?.startsWith("Bearer ")) {
-    return res.status(401).json({ error: "Missing token" });
-  }
-
-  const token = authHeader.split(" ")[1];
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-    req.user = decoded;
-    next();
-  } catch {
-    return res.status(401).json({ error: "Invalid or expired token" });
-  }
-}
 
 const app = express();
 const port = 3000;
@@ -47,9 +30,8 @@ const sequelize = new Sequelize(DB_DATA.DB, DB_DATA.NAME, DB_DATA.PASSWORD, {
 const User = sequelize.define("User", {
   username: { type: DataTypes.STRING, allowNull: false },
   email: { type: DataTypes.STRING, allowNull: false },
-  password: { type: DataTypes.STRING, allowNull: false }, // todo is stirng ok? also how long?
+  password: { type: DataTypes.STRING, allowNull: false },
 });
-type UserModel = typeof User.prototype;
 
 (async () => {
   try {
