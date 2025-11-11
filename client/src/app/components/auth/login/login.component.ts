@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,7 +34,9 @@ export class LoginComponent {
     { updateOn: 'submit' },
   );
 
-  constructor(private authService: AuthService) {}
+  private router = inject(Router);
+
+  constructor(private authService: AuthService) { }
 
   public onSubmit() {
     if (this.loginForm.invalid) return;
@@ -50,7 +52,8 @@ export class LoginComponent {
   }
 
   public login(user: Auth.LoginUser) {
-    return this.authService.login(user).subscribe(console.log);
+    return this.authService.login(user).subscribe(() =>
+      this.router.navigate(['/home']));
   }
 
   // Form field getters
