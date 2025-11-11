@@ -2,9 +2,30 @@ import express from "express"; // todo add ts to server
 import bcrypt from "bcrypt";
 import { Sequelize, DataTypes } from "sequelize";
 import { styleText } from 'node:util';
+import jwt from "jsonwebtoken";
+
+import dotenv from 'dotenv';
+dotenv.config();
 
 // todo fix this and add type in login
 // import { LoginUser } from "../shared/auth"
+
+// todo put into middleware
+export function authMiddleware(req: any, res: any, next: any) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader?.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "Missing token" });
+  }
+
+  const token = authHeader.split(" ")[1];
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    req.user = decoded;
+    next();
+  } catch {
+    return res.status(401).json({ error: "Invalid or expired token" });
+  }
+}
 
 const app = express();
 const port = 3000;
@@ -28,6 +49,7 @@ const User = sequelize.define("User", {
   email: { type: DataTypes.STRING, allowNull: false },
   password: { type: DataTypes.STRING, allowNull: false }, // todo is stirng ok? also how long?
 });
+type UserModel = typeof User.prototype;
 
 (async () => {
   try {
@@ -85,23 +107,29 @@ app.post("/forgot-password", (req, res) => {
 
 app.post("/login", async (req, res) => {
   try {
-    const { username, password } = req.body; // or: const { email, password } = loginUser;
+    const { username, password } = req.body;
+    const user = await User.findOne({ where: { username } }) as any;
+    if (!user) return res.status(404).json({ error: "User not found" });
 
-    const user = await User.findOne({ where: { username } });
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(401).json({ error: "Invalid credentials" });
 
-    const isMatch = await bcrypt.compare(password, (user as any).password);
-    if (!isMatch) {
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      process.env.JWT_SECRET!,
+      { expiresIn: "1h" }
+    );
 
-    res.status(200).json({ message: "Login successful" });
+    res.json({ token });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
   }
+});
+
+// todo types
+app.get("/profile", authMiddleware, async (req: any, res: any) => {
+  res.json({ message: `Welcome, ${req.user.username}` });
 });
 
 app.listen(port, () => {
