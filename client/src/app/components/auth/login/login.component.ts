@@ -6,6 +6,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+import { timer } from 'rxjs';
 
 import * as Auth from '@global/auth';
 
@@ -21,6 +24,7 @@ import { AuthService } from '../auth.service';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -33,6 +37,8 @@ export class LoginComponent {
     },
     { updateOn: 'submit' },
   );
+
+  public loading = false;
 
   private router = inject(Router);
 
@@ -52,8 +58,25 @@ export class LoginComponent {
   }
 
   public login(user: Auth.LoginUser) {
-    return this.authService.login(user).subscribe(() =>
-      this.router.navigate(['/home']));
+    this.loading = true;
+
+    const request = this.authService.login(user);
+    const minTime = timer(1500);
+
+    request.subscribe({
+      next: () => {
+        minTime.subscribe(() => {
+          this.loading = false;
+          this.router.navigate(['/']);
+        });
+      },
+      error: (err) => {
+        minTime.subscribe(() => {
+          this.loading = false;
+          console.error(err.error?.error);
+        });
+      }
+    });
   }
 
   // Form field getters

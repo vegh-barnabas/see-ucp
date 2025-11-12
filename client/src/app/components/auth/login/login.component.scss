@@ -12,6 +12,10 @@ mat-card {
   padding: 1rem;
   display: flex;
   gap: 12px;
+
+  &.loading {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
 }
 
 mat-card-title {
@@ -53,4 +57,17 @@ mat-card-content {
   a:hover {
     color: theme.$link-hover;
   }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 99%;
+  height: 99%;
+  backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
 }
