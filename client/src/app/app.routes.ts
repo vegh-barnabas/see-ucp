@@ -13,6 +13,10 @@ export const AppRoutes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginRedirectGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [LoginRedirectGuard] },
-  { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [LoginRedirectGuard] },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+    canActivate: [LoginRedirectGuard],
+  },
   { path: '**', component: NotFoundComponent, data: { errorCode: 404 } },
 ];

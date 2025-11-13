@@ -26,7 +26,8 @@ export class AuthService {
   }
 
   public login(user: Auth.LoginUser) {
-    return this.http.post<{ token: string }>('/api/login', user)
-      .pipe(tap(response => this.setAccessToken(response.token)));
+    return this.http
+      .post<{ token: string }>('/api/login', user)
+      .pipe(tap((response) => this.setAccessToken(response.token)));
   }
 }

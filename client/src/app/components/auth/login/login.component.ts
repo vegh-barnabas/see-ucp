@@ -24,7 +24,7 @@ import { AuthService } from '../auth.service';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -42,7 +42,7 @@ export class LoginComponent {
 
   private router = inject(Router);
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   public onSubmit() {
     if (this.loginForm.invalid) return;
@@ -75,7 +75,7 @@ export class LoginComponent {
           this.loading = false;
           console.error(err.error?.error);
         });
-      }
+      },
     });
   }
 

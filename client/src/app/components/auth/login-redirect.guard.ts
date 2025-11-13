@@ -4,7 +4,10 @@ import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class LoginRedirectGuard implements CanActivate {
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+  ) {}
 
   canActivate(): boolean {
     console.log(this.auth.getAccessToken());
