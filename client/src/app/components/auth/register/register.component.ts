@@ -17,7 +17,7 @@ import { emailValidator } from '@shared/email-validator.directive';
 import * as Auth from '@global/auth';
 
 @Component({
-  selector: 'register',
+  selector: 'app-register',
   standalone: true,
   imports: [
     CommonModule,

@@ -15,7 +15,7 @@ import * as Auth from '@global/auth';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'login',
+  selector: 'app-login',
   imports: [
     CommonModule,
     ReactiveFormsModule,

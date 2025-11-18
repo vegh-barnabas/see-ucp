@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'not-found',
+  selector: 'app-not-found',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './not-found.component.html',
