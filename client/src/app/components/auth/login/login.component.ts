@@ -13,6 +13,7 @@ import { timer } from 'rxjs';
 import * as Auth from '@global/auth';
 
 import { AuthService } from '../auth.service';
+import { SnackbarService } from '@shared/snackbar-service';
 
 @Component({
   selector: 'app-login',
@@ -40,9 +41,11 @@ export class LoginComponent {
 
   public loading = false;
 
-  private router = inject(Router);
-
-  constructor(private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private snackbar: SnackbarService,
+  ) {}
 
   public onSubmit() {
     if (this.loginForm.invalid) return;
@@ -74,6 +77,7 @@ export class LoginComponent {
         minTime.subscribe(() => {
           this.loading = false;
           console.error(err.error?.error);
+          this.snackbar.open(err.error?.error);
         });
       },
     });
