@@ -44,7 +44,7 @@ const User = sequelize.define("User", {
 })();
 
 // Endpoints
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
   res.json({ message: "Hello from backend" });
 });
 
@@ -56,7 +56,6 @@ app.post("/register", async (req, res) => {
   }
 
   try {
-    // Check if username already exists
     const existingUser = await User.findOne({ where: { username } });
     if (existingUser) {
       return res.status(409).json({ error: "Username already exists" });
@@ -65,12 +64,10 @@ app.post("/register", async (req, res) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // Insert new user
     const newUser = await User.create({
       username,
       email,
       password: hashedPassword,
-      // todo add password with hashing on client-side(?)
     });
 
     res.status(201).json({ message: "Registered successfully", user: newUser });
@@ -91,7 +88,7 @@ app.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ where: { username } }) as any;
-    if (!user) return res.status(404).json({ error: "User not found" });
+    if (!user) return res.status(404).json({ error: "Invalid credentials" });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ error: "Invalid credentials" });
