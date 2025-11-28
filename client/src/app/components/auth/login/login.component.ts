@@ -14,7 +14,6 @@ import { timer } from 'rxjs';
 import * as Auth from '@global/auth';
 
 import { AuthService } from '../auth.service';
-import { SnackbarService } from '@shared/snackbar-service';
 
 @Component({
   selector: 'app-login',
