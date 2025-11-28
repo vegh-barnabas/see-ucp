@@ -13,7 +13,6 @@ interface LoginResponse {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http = inject(HttpClient);
-  private accessToken: string | null = null;
 
   private setAccessToken(response: LoginResponse) {
     localStorage.setItem('id_token', response.token);

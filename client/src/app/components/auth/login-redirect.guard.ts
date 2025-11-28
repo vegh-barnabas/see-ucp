@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class LoginRedirectGuard implements CanActivate {
-  constructor(
-    private auth: AuthService,
-    private router: Router,
-  ) {}
+  constructor(private router: Router) {}
 
   canActivate(): boolean {
-    console.log(this.auth.getAccessToken());
+    const token = localStorage.getItem('id_token');
 
-    if (this.auth.getAccessToken()) {
+    if (token) {
       this.router.navigate(['/']);
       return false;
     }
