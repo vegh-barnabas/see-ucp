@@ -3,11 +3,12 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import { Sequelize, DataTypes } from "sequelize";
-import { styleText } from 'node:util';
+import { styleText } from "node:util";
 import jwt from "jsonwebtoken";
 
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 import { authMiddleware } from "./authMiddleware.ts";
+
 dotenv.config();
 
 const app = express();
@@ -36,10 +37,14 @@ const User = sequelize.define("User", {
 (async () => {
   try {
     await sequelize.authenticate();
-    console.log(styleText('green', 'Connection has been established successfully.'));
+    console.log(
+      styleText("green", "Connection has been established successfully.")
+    );
     // await sequelize.sync(); // make sure table exists
   } catch (error) {
-    console.log(styleText('red', `Unable to connect to the database: ${error}`,));
+    console.log(
+      styleText("red", `Unable to connect to the database: ${error}`)
+    );
   }
 })();
 
@@ -84,14 +89,20 @@ app.post("/forgot-password", (req, res) => {
   res.status(200).json({ message: "Forgot password sent successfully", user });
 });
 
+async function delay(ms: number): Promise<any> {
+  return new Promise((resolve) => setTimeout(resolve, ms)); /// waiting 1 second.
+}
+
 app.post("/login", async (req, res) => {
   try {
+    await delay(3000);
+
     const { username, password } = req.body;
-    const user = await User.findOne({ where: { username } }) as any;
+    const user = (await User.findOne({ where: { username } })) as any;
     if (!user) return res.status(404).json({ error: "Invalid credentials" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ error: "Invalid credentials" });
+    if (!isMatch) return res.status(404).json({ error: "Invalid credentials" });
 
     const token = jwt.sign(
       { id: user.id, username: user.username },
@@ -99,7 +110,7 @@ app.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.json({ token });
+    res.json({ token, expiresIn: 3600 });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
