@@ -1,20 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
-import * as Auth from '@global/auth';
 import { tap } from 'rxjs';
+
+import * as Auth from '@global/auth';
+
+interface LoginResponse {
+  token: string;
+  expiresIn: number;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http = inject(HttpClient);
   private accessToken: string | null = null;
 
-  private setAccessToken(token: string) {
-    this.accessToken = token;
-  }
+  private setAccessToken(response: LoginResponse) {
+    localStorage.setItem('id_token', response.token);
 
-  public getAccessToken(): string | null {
-    return this.accessToken;
+    // todo fix date bug
+    const expiresAt = Date.now() + response.expiresIn * 1000;
+    localStorage.setItem('expires_at', String(expiresAt));
   }
 
   public register(user: Auth.RegisterUser) {
@@ -27,7 +33,22 @@ export class AuthService {
 
   public login(user: Auth.LoginUser) {
     return this.http
-      .post<{ token: string }>('/api/login', user)
-      .pipe(tap((response) => this.setAccessToken(response.token)));
+      .post<LoginResponse>('/api/login', user)
+      .pipe(tap((response) => this.setAccessToken(response)));
+  }
+
+  public logout() {
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
+  }
+
+  public isLoggedIn() {
+    const expiresAt = localStorage.getItem('expires_at');
+
+    console.log(Date.now(), expiresAt);
+
+    if (Date.now() > Number(expiresAt)) return false;
+
+    return true;
   }
 }
