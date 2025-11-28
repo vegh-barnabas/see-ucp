@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SnackbarService } from '@shared/snackbar.service';
 
 import { timer } from 'rxjs';
 
@@ -42,15 +43,13 @@ export class LoginComponent {
   public loading = false;
 
   constructor(
-    private router: Router,
     private authService: AuthService,
-    private snackbar: SnackbarService,
+    private snackbarService: SnackbarService,
+    private router: Router,
   ) {}
 
   public onSubmit() {
     if (this.loginForm.invalid) return;
-
-    console.warn(this.loginForm.value);
 
     const loginUser: Auth.LoginUser = {
       username: this.loginForm.value.username!,
@@ -61,7 +60,11 @@ export class LoginComponent {
   }
 
   public login(user: Auth.LoginUser) {
+    if (this.loading) return;
+
     this.loading = true;
+
+    console.log('Login with', user);
 
     const request = this.authService.login(user);
     const minTime = timer(1500);
@@ -70,14 +73,13 @@ export class LoginComponent {
       next: () => {
         minTime.subscribe(() => {
           this.loading = false;
-          this.router.navigate(['/']);
+          this.router.navigate(['/'], { state: { message: 'Login successful!' } });
         });
       },
       error: (err) => {
         minTime.subscribe(() => {
           this.loading = false;
-          console.error(err.error?.error);
-          this.snackbar.open(err.error?.error);
+          this.snackbarService.open(err.error?.error);
         });
       },
     });
