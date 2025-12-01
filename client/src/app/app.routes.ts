@@ -5,12 +5,14 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { NotFoundComponent } from './components/auth/not-found/not-found.component';
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
 import { HomeComponent } from './components/home/home.component';
+import { UCPComponent } from './components/ucp/ucp.component';
 
 import { AuthGuard } from './components/auth/auth.guard';
 import { LoginRedirectGuard } from './components/auth/login-redirect.guard';
 
 export const AppRoutes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'ucp', component: UCPComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginRedirectGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [LoginRedirectGuard] },
   {
