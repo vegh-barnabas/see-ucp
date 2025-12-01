@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+
 import { NavbarComponent } from '../navbar/navbar.component';
+
 import { AuthService } from '../auth/auth.service';
 
 @Component({
