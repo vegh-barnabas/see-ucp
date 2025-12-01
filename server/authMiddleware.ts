@@ -1,6 +1,22 @@
 import jwt from "jsonwebtoken";
+import type { JwtPayload } from "jsonwebtoken";
 
-export function authMiddleware(req: any, res: any, next: any) {
+import type { NextFunction, Request, Response } from "express";
+
+interface UserPayload extends JwtPayload {
+  id: number;
+  username: string;
+}
+
+export interface AuthRequest extends Request {
+  user?: UserPayload;
+}
+
+export function authMiddleware(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith("Bearer ")) {
     return res.status(401).json({ error: "Missing token" });
@@ -8,7 +24,7 @@ export function authMiddleware(req: any, res: any, next: any) {
 
   const token = authHeader.split(" ")[1];
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as UserPayload;
     req.user = decoded;
     next();
   } catch {

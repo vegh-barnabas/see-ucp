@@ -1,13 +1,13 @@
-// todo add types
-
 import express from "express";
+import type { Request, Response } from "express";
+
 import bcrypt from "bcrypt";
 import { Sequelize, DataTypes } from "sequelize";
 import { styleText } from "node:util";
 import jwt from "jsonwebtoken";
 
 import dotenv from "dotenv";
-import { authMiddleware } from "./authMiddleware.ts";
+import { authMiddleware, AuthRequest } from "./authMiddleware.ts";
 
 dotenv.config();
 
@@ -41,7 +41,7 @@ const User = sequelize.define("User", {
       styleText("green", "Connection has been established successfully.")
     );
     // await sequelize.sync(); // make sure table exists
-  } catch (error) {
+  } catch (error: unknown) {
     console.log(
       styleText("red", `Unable to connect to the database: ${error}`)
     );
@@ -49,11 +49,11 @@ const User = sequelize.define("User", {
 })();
 
 // Endpoints
-app.get("/", (_, res) => {
+app.get("/", (_, res: Response) => {
   res.json({ message: "Hello from backend" });
 });
 
-app.post("/register", async (req, res) => {
+app.post("/register", async (req: Request, res: Response) => {
   const { username, password, email } = req.body;
 
   if (!username || !password || !email) {
@@ -76,24 +76,22 @@ app.post("/register", async (req, res) => {
     });
 
     res.status(201).json({ message: "Registered successfully", user: newUser });
-    // todo add toast client side and redirect
-  } catch (err) {
+  } catch (err: unknown) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
-    // todo add toast client side
   }
 });
 
-app.post("/forgot-password", (req, res) => {
+app.post("/forgot-password", (req: Request, res: Response) => {
   const user = req.body;
   res.status(200).json({ message: "Forgot password sent successfully", user });
 });
 
-async function delay(ms: number): Promise<any> {
+async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-app.post("/login", async (req, res) => {
+app.post("/login", async (req: Request, res: Response) => {
   try {
     await delay(3000);
 
@@ -111,15 +109,14 @@ app.post("/login", async (req, res) => {
     );
 
     res.json({ token, expiresIn: 3600 });
-  } catch (err) {
+  } catch (err: unknown) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-// todo types
-app.get("/profile", authMiddleware, async (req: any, res: any) => {
-  res.json({ message: `Welcome, ${req.user.username}` });
+app.get("/profile", authMiddleware, async (req: AuthRequest, res: Response) => {
+  res.json({ message: `Welcome, ${req.user!.username}` });
 });
 
 app.listen(port, () => {
