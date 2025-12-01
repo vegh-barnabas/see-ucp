@@ -17,7 +17,6 @@ export class AuthService {
   private setAccessToken(response: LoginResponse) {
     localStorage.setItem('id_token', response.token);
 
-    // todo fix date bug
     const expiresAt = Date.now() + response.expiresIn * 1000;
     localStorage.setItem('expires_at', String(expiresAt));
   }
@@ -43,8 +42,6 @@ export class AuthService {
 
   public isLoggedIn() {
     const expiresAt = localStorage.getItem('expires_at');
-
-    console.log(Date.now(), expiresAt);
 
     if (Date.now() > Number(expiresAt)) return false;
 

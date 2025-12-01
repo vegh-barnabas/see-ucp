@@ -9,8 +9,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SnackbarService } from '@shared/snackbar.service';
 
-import { timer } from 'rxjs';
-
 import * as Auth from '@global/auth';
 
 import { AuthService } from '../auth.service';
@@ -65,21 +63,14 @@ export class LoginComponent {
 
     console.log('Login with', user);
 
-    const request = this.authService.login(user);
-    const minTime = timer(1500);
-
-    request.subscribe({
+    this.authService.login(user).subscribe({
       next: () => {
-        minTime.subscribe(() => {
-          this.loading = false;
-          this.router.navigate(['/'], { state: { message: 'Login successful!' } });
-        });
+        this.loading = false;
+        this.router.navigate(['/'], { state: { message: 'Login successful!' } });
       },
       error: (err) => {
-        minTime.subscribe(() => {
-          this.loading = false;
-          this.snackbarService.open(err.error?.error);
-        });
+        this.loading = false;
+        this.snackbarService.open(err.error?.error);
       },
     });
   }
