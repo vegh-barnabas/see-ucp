@@ -1,8 +1,15 @@
 <mat-toolbar>
-  <p>DriftSociety</p>
-  <span class="example-spacer"></span>
-  <p>Home</p>
-  <p>UCP</p>
-  <p>Webadmin</p>
-  <p>Profile</p>
+  <button matButton><mat-icon fontIcon="sports_motorsports"></mat-icon>DriftSociety</button>
+
+  <span class="spacer"></span>
+
+  <button matButton><mat-icon fontIcon="apps"></mat-icon>UCP</button>
+  <button matButton><mat-icon fontIcon="admin_panel_settings"></mat-icon>WebAdmin</button>
+  <button matButton [matMenuTriggerFor]="profileMenu">
+    <mat-icon fontIcon="account_circle"></mat-icon>Profile
+  </button>
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item>Settings</button>
+    <button mat-menu-item (click)="logout()">Log out</button>
+  </mat-menu>
 </mat-toolbar>

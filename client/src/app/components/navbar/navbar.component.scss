@@ -1,7 +1,14 @@
 mat-toolbar {
   gap: 16px;
+  height: 56px;
+  background: #5798ff;
+  margin-bottom: 12px;
+
+  button {
+    color: #fbfbff;
+  }
 }
 
-.example-spacer {
+.spacer {
   flex: 1 1 auto;
 }
