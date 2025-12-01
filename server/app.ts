@@ -90,7 +90,7 @@ app.post("/forgot-password", (req, res) => {
 });
 
 async function delay(ms: number): Promise<any> {
-  return new Promise((resolve) => setTimeout(resolve, ms)); /// waiting 1 second.
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 app.post("/login", async (req, res) => {
