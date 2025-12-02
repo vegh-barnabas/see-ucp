@@ -13,6 +13,8 @@ import { LoginRedirectGuard } from './components/auth/login-redirect.guard';
 export const AppRoutes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'ucp', component: UCPComponent, canActivate: [AuthGuard] },
+  { path: 'webadmin', component: UCPComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: UCPComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginRedirectGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [LoginRedirectGuard] },
   {

@@ -6,6 +6,10 @@ mat-toolbar {
 
   button {
     color: #fbfbff;
+
+    &.active {
+      background-color: #5688e9;
+    }
   }
 }
 

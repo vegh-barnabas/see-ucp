@@ -1,15 +1,34 @@
 <mat-toolbar>
-  <button matButton><mat-icon fontIcon="sports_motorsports"></mat-icon>DriftSociety</button>
+  <button matButton [routerLink]="['/']">
+    <mat-icon fontIcon="sports_motorsports"></mat-icon>
+    DriftSociety
+  </button>
 
   <span class="spacer"></span>
 
-  <button matButton><mat-icon fontIcon="apps"></mat-icon>UCP</button>
-  <button matButton><mat-icon fontIcon="admin_panel_settings"></mat-icon>WebAdmin</button>
-  <button matButton [matMenuTriggerFor]="profileMenu">
-    <mat-icon fontIcon="account_circle"></mat-icon>Profile
+  <button matButton [routerLink]="['/ucp']" routerLinkActive="active">
+    <mat-icon fontIcon="apps"></mat-icon>
+    UCP
+  </button>
+
+  <button matButton [routerLink]="['/webadmin']" routerLinkActive="active">
+    <mat-icon fontIcon="admin_panel_settings"></mat-icon>
+    WebAdmin
+  </button>
+
+  <button matButton [matMenuTriggerFor]="profileMenu" [class.active]="rlaSettings.isActive">
+    <mat-icon fontIcon="account_circle"></mat-icon>
+    Profile
   </button>
   <mat-menu #profileMenu="matMenu">
-    <button mat-menu-item>Settings</button>
+    <button
+      mat-menu-item
+      [routerLink]="['/profile']"
+      routerLinkActive="activeAlma"
+      #rlaSettings="routerLinkActive"
+    >
+      Settings
+    </button>
     <button mat-menu-item (click)="logout()">Log out</button>
   </mat-menu>
 </mat-toolbar>
