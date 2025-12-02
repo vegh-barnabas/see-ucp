@@ -7,7 +7,7 @@ import { styleText } from "node:util";
 import jwt from "jsonwebtoken";
 
 import dotenv from "dotenv";
-import { authMiddleware, AuthRequest } from "./authMiddleware.ts";
+import { authMiddleware, type AuthRequest } from "./authMiddleware.ts";
 
 dotenv.config();
 
